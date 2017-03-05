@@ -53,6 +53,26 @@ if argc < 2:
 	print "No arguments given, using default values"
 
 else:
+	if sys.argv[1] == "-h" or sys.argv[1] == "--help": # help
+		print "RinexParser.py: Python utility for converting RINEX to CSV"
+		print "Usage:"
+		print "RinexParser.py [RINEX_File [CSV_File]] [-al] [-f Fields]"
+		print "  RINEX_File : Name of Rinex file"
+		print "  CSV_File   : Name of csv file, built from RINEX name if absent"
+		print "  -a         : Append to csv file"
+		print "  -l         : Legacy data only, supercedes -f"
+		print "  -f Fields  : List of rinex fields as specified"
+		print "    C => C/A code measurement"
+		print "    P => P code measurement"
+		print "    L => Carrier phase"
+		print "    D => Doppler"
+		print "    S => Carrier noise density (dB-Hz)"
+		print ""
+		print "    Numbers indicate the signal band (1 => L1, 2 => L2, 3 => L5)"
+		print "    P2 is the P code measurment on the L2 band in compliance with the RINEX"
+		print "    2.11 speccification."
+		exit(0) 
+
 	rinFileName = sys.argv[1]
 	csvFileName = rinFileName[:-3] + "csv" 
 	
@@ -75,6 +95,10 @@ else:
 		elif sys.argv[i] == "-a": # append mode
 			writeMode = "a"
 
+
+		else:
+			print "Unknown argument: {}".format(sys.argv[i])
+			exit(0)
 		i += 1
 	
 # Open the rinex file and extract header data
