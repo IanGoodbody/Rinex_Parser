@@ -80,11 +80,13 @@ else:
 	while i < argc: 
 		if i == 2 and sys.argv[i][0] != "-":
 			csvFileName = sys.argv[2]
+			i += 1
+			continue
 		
 		if sys.argv[i] == "-f": # Use the user specified format
 			i += 1
+			csvFields = []
 			while i < argc and sys.argv[i][0] != "-":
-				csvFields = []
 				csvFields.append(sys.argv[i])
 				i += 1
 	
@@ -94,7 +96,6 @@ else:
 
 		elif sys.argv[i] == "-a": # append mode
 			writeMode = "a"
-
 
 		else:
 			print "Unknown argument: {}".format(sys.argv[i])
@@ -138,7 +139,10 @@ while currentLine != "":
 		# Parse the PRN values for this epoch
 		numSats = int(currentLine[30:32])
 		epochPRN = []
-		for i in range(numSats):
+		for j in range(numSats / 12):
+			for i in range(12):
+				epochPRN.append(currentLine[33+i*3:35+i*3])
+		for i in range(numSats % 12):
 			epochPRN.append(currentLine[33+i*3:35+i*3])
 
 		for prn in epochPRN:
