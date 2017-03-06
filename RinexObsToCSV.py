@@ -36,9 +36,8 @@ gpsRecord = dict(
   S5 = '0'
 )
 
-rinFileName = "SEPT0621.17O"
-csvFileName = "SEPT0621.csv"
-
+rinFileName = "cat20010.16n"
+csvFileName = "cat20010.csv"
 writeMode = "w"
 
 csvFields = ["time", "prn", "C1", "P1", "L1", "D1", "S1", "C2", "P2", "L2", 
@@ -121,7 +120,7 @@ while currentLine[60:].rstrip() != "END OF HEADER":
 # Scroll through looking for valid epochs
 currentLine = rinFile.readline()
 while currentLine != "":
-	if currentLine != "\r\n" and currentLine[27:30] == " 0 ":
+	if currentLine[27:30] == " 0 ":
 		year = int(currentLine[1:3])
 		if year < 80: 
 			year = 2000 + year
